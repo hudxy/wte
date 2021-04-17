@@ -80,16 +80,16 @@ export default function App() {
               map
             });
             infowindows.push(infowindow);
-            // Click da map to see food place title
-            marker.addListener("click", ()=> {
+            // Hover over da map to see food place title
+            marker.addListener("mouseover", ()=> {
               infowindow.open(map, marker);
+            });
+            marker.addListener("mouseout", ()=> {
+              infowindow.close();
             });
           }
         }
       }
-      // map.addListener("click", ()=> {
-      //   infowindow.open(map, marker);
-      // });
     }, []);
 
     if (loadError) return "Error Loading Maps";
