@@ -70,9 +70,21 @@ export default function App() {
             let place = results[i];
             // Log what we get back from google
             console.log(place);
+
+            // Display text for infowindow
+            let content_string = place.name;
+            if (!place.price_level)
+            {
+              content_string += "\nFree!"
+            }
+            else
+            {
+              content_string += "\n" + ('$'.repeat(place.price_level));
+            }
+
             // Make a info bubble for marker
             const infowindow = new window.google.maps.InfoWindow({
-              content: place.name,
+              content: content_string,
             });
             // Place marker on map
             const marker = new window.google.maps.Marker({
@@ -104,6 +116,7 @@ export default function App() {
           </span>
         </h1>
         <Search panTo={panTo}/>
+        <ChooseForMe panTo={panTo}/>
         <GoogleMap
          id="map"
          mapContainerStyle={mapContainerStyle} 
@@ -181,4 +194,50 @@ function Search({ panTo }) {
       {status === "OK" && <ul>{renderSuggestions()}</ul>}
     </div>
   );
+}
+
+var position = 
+    {
+      lat : null,
+      lng : null
+    }; 
+
+function ChooseForMe({ panTo })
+{
+  function geolocate_success(pos)
+  {
+    var crd = pos.coords;
+    position.lat = parseFloat( crd.latitude );
+    position.lng = parseFloat( crd.longitude );
+
+    console.log(`lat: ${position.lat} and type : ${typeof(position.lat)}`);
+    console.log(`lng: ${position.lng} and type : ${typeof(position.lng)}`);
+    panTo(position);
+  }
+
+  function geolocate_error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  }
+
+  function run() 
+  {
+    if (!position.lat || !position.lng)
+    {
+      // Get position and set global position var
+      navigator.geolocation.getCurrentPosition(geolocate_success, geolocate_error)
+    }
+    else 
+    {
+      // We already have position just call again
+      panTo(position);
+    }
+  }
+
+  return (
+    <div className="ChooseForMe">
+      <button onClick={run}>
+        Choose For Me!
+      </button>
+    </div>
+  )
 }
