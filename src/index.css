@@ -59,3 +59,11 @@ h1 {
   display: inline-block;
   font-size: 16px;
 }
+
+@media only screen and (max-width: 1000px)
+{
+  .ChooseForMe {
+    top: 9rem;
+    left: 75%;
+  }
+}

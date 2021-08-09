@@ -82,7 +82,10 @@ export default function App() {
           console.log(place);
 
           // Display text for infowindow
-          let content_string = generateInfoBubbleText(place.name, place.price_level);
+          let content_string = generateInfoBubbleText(
+            place.name,
+            place.price_level
+          );
 
           // Make a info bubble for marker
           const infowindow = new window.google.maps.InfoWindow({
@@ -98,6 +101,9 @@ export default function App() {
           marker.addListener("mouseover", () => {
             infowindow.open(map, marker);
           });
+          marker.addListener("click", () => {
+            infowindow.open(map, marker);
+          });
           marker.addListener("mouseout", () => {
             infowindow.close();
           });
@@ -107,8 +113,6 @@ export default function App() {
   }, []);
 
   const chooseRandom = React.useCallback(({ lat, lng }) => {
-    mapRef.current.panTo({ lat, lng });
-    mapRef.current.setZoom(12);
     let map = mapRef.current;
 
     let request = {
@@ -126,9 +130,17 @@ export default function App() {
         let place = results[i];
         // Log what we get back from google
         console.log(place);
+        mapRef.current.panTo({
+          lat: parseFloat(place.geometry.location.lat()),
+          lng: parseFloat(place.geometry.location.lng()),
+        });
+        mapRef.current.setZoom(12);
 
         // Display text for infowindow
-        let content_string = generateInfoBubbleText(place.name, place.price_level);
+        let content_string = generateInfoBubbleText(
+          place.name,
+          place.price_level
+        );
 
         // Make a info bubble for marker
         const infowindow = new window.google.maps.InfoWindow({
@@ -142,6 +154,10 @@ export default function App() {
         infowindows.push(infowindow);
         // Hover over da map to see food place title
         marker.addListener("mouseover", () => {
+          infowindow.open(map, marker);
+        });
+        marker.addListener("click", () => {
+          console.log("touch")
           infowindow.open(map, marker);
         });
         marker.addListener("mouseout", () => {
