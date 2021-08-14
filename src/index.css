@@ -75,7 +75,12 @@ h1 {
 @media only screen and (max-width: 1000px)
 {
   .ChooseForMe {
-    top: 9rem;
+    top: 4.5rem;
     left: 75%;
+  }
+
+  .search
+  {
+    top: 8rem;
   }
 }
