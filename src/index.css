@@ -39,6 +39,18 @@ h1 {
   width: 100%;
 }
 
+.searchDropdown {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  left: 51%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 400px;
+  background-color: #d5d5d5;
+  border-bottom: #281414;
+}
+
 .ChooseForMe {
   position: absolute;
   top: 1rem;
