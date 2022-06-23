@@ -78,8 +78,6 @@ export default function App() {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         for (let i = 0; i < results.length; i++) {
           let place = results[i];
-          // Log what we get back from google
-          console.log(place);
 
           // Display text for infowindow
           let content_string = generateInfoBubbleText(
@@ -128,8 +126,7 @@ export default function App() {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         let i = Math.floor(Math.random() * results.length);
         let place = results[i];
-        // Log what we get back from google
-        console.log(place);
+
         mapRef.current.panTo({
           lat: parseFloat(place.geometry.location.lat()),
           lng: parseFloat(place.geometry.location.lng()),
@@ -157,7 +154,6 @@ export default function App() {
           infowindow.open(map, marker);
         });
         marker.addListener("click", () => {
-          console.log("touch")
           infowindow.open(map, marker);
         });
         marker.addListener("mouseout", () => {
@@ -271,8 +267,6 @@ function ChooseForMe({ chooseRandom }) {
     position.lat = parseFloat(crd.latitude);
     position.lng = parseFloat(crd.longitude);
 
-    console.log(`lat: ${position.lat} and type : ${typeof position.lat}`);
-    console.log(`lng: ${position.lng} and type : ${typeof position.lng}`);
     chooseRandom(position);
   }
 
